@@ -12,12 +12,12 @@ export class HomeComponent implements OnInit {
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
-    this.httpClient.get(`${environment.apiURL}/ED-GetNews?EmployeeId=3`)
-      .subscribe((res: any) => {
-        this.dataList = res.data
-        console.log(this.dataList)
-        // console.log(res.data)
-      })
+    // this.httpClient.get(`${environment.apiURL}/ED-GetNews?EmployeeId=3`)
+    //   .subscribe((res: any) => {
+    //     this.dataList = res.data
+    //     console.log(this.dataList)
+    //     // console.log(res.data)
+    //   })
   }
 
 }
