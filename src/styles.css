@@ -1,1 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+.form-switch .form-check-input:checked {
+    background-color: green;
+    border-color: green;
+}

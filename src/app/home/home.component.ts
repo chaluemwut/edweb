@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { faPenToSquare, faCircleMinus, faFileCircleCheck, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-home',
@@ -9,15 +11,60 @@ import { environment } from 'src/environments/environment';
 })
 export class HomeComponent implements OnInit {
   dataList = []
-  constructor(private httpClient: HttpClient) { }
+  faPenToSquare = faPenToSquare
+  faCircleMinus = faCircleMinus
+  faFileCircleCheck = faFileCircleCheck
+  faCirclePlus = faCirclePlus
+  closeResult = ''
+  name = ''
+  detail = ''
+  newsIndex = 0
+  isDataChecked = true
+  constructor(private httpClient: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    // this.httpClient.get(`${environment.apiURL}/ED-GetNews?EmployeeId=3`)
-    //   .subscribe((res: any) => {
-    //     this.dataList = res.data
-    //     console.log(this.dataList)
-    //     // console.log(res.data)
-    //   })
+    this.httpClient.get(`${environment.apiURL}/ED-GetNews?EmployeeId=3`)
+      .subscribe((res: any) => {
+        this.dataList = res.data
+        console.log(this.dataList)
+        // console.log(res.data)
+      })
   }
 
+
+  open(content: any, index: any) {
+    let data = this.dataList[index]
+    this.name = data['NameNews']
+    this.detail = data['Detail']
+    this.newsIndex = index
+    this.isDataChecked = data['Status'] == 1
+    this.modalService.open(content, { ariaLabelledBy: 'modal-basic-title' }).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+    }, (reason) => {
+
+    });
+  }
+
+  toggleStatus(value: any) {
+    console.log(value)
+  }
+
+  saveNews() {
+    let data: any = this.dataList[this.newsIndex]
+    let dataStatus = 0
+    if (this.isDataChecked) {
+      dataStatus = 1
+    } else {
+      dataStatus = 0
+    }
+    data['Status'] = dataStatus
+    const formData = new FormData()
+    formData.append("EmployeeId", '3')
+    formData.append("NewsId", '1')
+    formData.append("Status", `${dataStatus}`)
+    this.httpClient.post(`${environment.apiURL}/ED-UpdateStatusNews`, formData).subscribe((res) => {      
+      this.modalService.dismissAll()
+    })
+  }
+  
 }

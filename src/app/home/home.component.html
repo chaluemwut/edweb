@@ -1,26 +1,102 @@
 <div>
-    <!-- <div class="row" style="text-align:center; margin-top: 20px;">
+    <div class="row" style="margin-top: 20px;">
         <div class="col"></div>
         <div class="col-6">
-            <button class="btn btn-primary">ok</button>
-            <table>
-                  <thead>
+            <div>ข่าวประขาสัมพันธ์</div>
+            <div style="text-align:right">
+                <button class="btn" style="background-color: green">
+                    <fa-icon [icon]="faCirclePlus" style="color: white;"></fa-icon>
+                    <span style="color: white; margin-left: 5px;">เพิ่มข่าว</span>
+                </button>
+            </div>
+            <div>รายการข่าวประขาสัมพันธ์</div>
+            <table style="text-align: center; margin-top: 10px;">
+                <thead>
                     <tr>
                         <th scope="col">ลำดับ</th>
-                        <th scope="col">ชื่อเรื่อง</th>
+                        <th scope="col-8">ชื่อเรื่อง</th>
                         <th scope="col">วันที่สร้าง</th>
-                        <th scope="col">จัดการ</th>
+                        <th scope="col-4">จัดการ</th>
                     </tr>
-                  </thead>              
-                  <tbody>
-                    <tr *ngFor="let data of dataList">
-                        <td>{{data['NameNews']}}</td>
-                        <td>{{data['UpdatedDate']}}</td>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let data of dataList; let i = index">
+                        <td class="col">
+                            <div *ngIf="data['Status'] == 1" class="form-check form-switch">
+                                <input class="form-check-input" style="background-color: green; border-color: green;"
+                                    type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                {{i+1}}
+                            </div>
+                            <div class="form-check form-switch" *ngIf="data['Status'] == 0">
+                                <input class="form-check-input" type="checkbox" role="switch"
+                                    id="flexSwitchCheckDefault">
+                                {{i+1}}
+                            </div>
+                        </td>
+                        <td class="col-8">{{data['NameNews']}}</td>
+                        <td class="col">{{data['UpdatedDate'] | date: 'dd/MM/yyyy'}}</td>
+                        <td class="col-4">
+                            <fa-icon [icon]="faFileCircleCheck" style="margin-left:5px; color:aqua; cursor: pointer;">
+                            </fa-icon>
+                            <fa-icon [icon]="faPenToSquare" style="margin-left: 5px; cursor: pointer;"
+                                (click)="open(content,i)"></fa-icon>
+                            <fa-icon [icon]="faCircleMinus" style="margin-left:5px; color: red; cursor: pointer;">
+                            </fa-icon>
+                        </td>
                     </tr>
-                  </tbody>
+                </tbody>
             </table>
         </div>
         <div class="col"></div>
-    </div> -->
-    <div>Hello world</div>    
+    </div>
+
+    <ng-template #content let-modal>
+        <div style="background-color: #303F9F; color: white; ">
+            <div style="margin-top: 10px; margin-left: 10px; margin-bottom: 10px;">
+                รายละเอียดข่าวประชาสัมพันธ์
+            </div>
+            <!-- <h4 class="modal-title" id="modal-basic-title">Profile update</h4> -->
+            <!-- <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button> -->
+        </div>
+        <div class="modal-body">
+            <table>
+                <tr>
+                    <td>ชื่อเรื่อง</td>
+                    <td>
+                        <div class="alert alert-secondary" role="alert">
+                            {{name}}
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>เนื้อหา</td>
+                    <td>
+                        <div class="alert alert-secondary" role="alert">
+                            {{detail}}
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>สถานะ</td>
+                    <td>
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckChecked"
+                                [(ngModel)]="isDataChecked">
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div style="text-align: center;">
+            <button type="button" class="btn"
+                style="background-color: #303F9F; color: white; margin-bottom: 10px; margin-top: 10px;"
+                (click)="saveNews()">
+                ปิด
+            </button>
+        </div>
+    </ng-template>
+
+    <!-- <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button> -->
+
 </div>
