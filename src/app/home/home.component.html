@@ -1,1 +1,26 @@
-<p>home works!</p>
+<div>
+    <div class="row" style="text-align:center; margin-top: 20px;">
+        <div class="col"></div>
+        <div class="col-6">
+            <button class="btn btn-primary">ok</button>
+            <table>
+                  <thead>
+                    <tr>
+                        <th scope="col">ลำดับ</th>
+                        <th scope="col">ชื่อเรื่อง</th>
+                        <th scope="col">วันที่สร้าง</th>
+                        <th scope="col">จัดการ</th>
+                    </tr>
+                  </thead>              
+                  <tbody>
+                    <tr *ngFor="let data of dataList">
+                        <td>{{data['NameNews']}}</td>
+                        <td>{{data['UpdatedDate']}}</td>
+                    </tr>
+                  </tbody>
+            </table>
+        </div>
+        <div class="col"></div>
+    </div>
+    
+</div>
