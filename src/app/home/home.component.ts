@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { faPenToSquare, faCircleMinus, faFileCircleCheck, faCirclePlus } from '@fortawesome/free-solid-svg-icons';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { HttpHeaders } from '@angular/common/http';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,13 @@ export class HomeComponent implements OnInit {
   constructor(private httpClient: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    this.httpClient.get(`${environment.apiURL}/ED-GetNews?EmployeeId=3`)
+    const headers = new HttpHeaders()
+      .append('Content-Type', 'application/json')
+      .append('Access-Control-Allow-Headers', 'Content-Type')
+      .append('Access-Control-Allow-Methods', 'GET')
+      .append('Access-Control-Allow-Origin', '*');
+
+    this.httpClient.get(`${environment.apiURL}/ED-GetNews?EmployeeId=3`, { headers: headers })
       .subscribe((res: any) => {
         this.dataList = res.data
         console.log(this.dataList)
@@ -62,9 +69,16 @@ export class HomeComponent implements OnInit {
     formData.append("EmployeeId", '3')
     formData.append("NewsId", '1')
     formData.append("Status", `${dataStatus}`)
-    this.httpClient.post(`${environment.apiURL}/ED-UpdateStatusNews`, formData).subscribe((res) => {      
+
+    const headers = new HttpHeaders()
+      .append('Content-Type', 'application/json')
+      .append('Access-Control-Allow-Headers', 'Content-Type')
+      .append('Access-Control-Allow-Methods', 'GET')
+      .append('Access-Control-Allow-Origin', '*');
+
+    this.httpClient.post(`${environment.apiURL}/ED-UpdateStatusNews`, formData, { headers: headers }).subscribe((res) => {
       this.modalService.dismissAll()
     })
   }
-  
+
 }
