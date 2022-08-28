@@ -73,7 +73,7 @@ export class HomeComponent implements OnInit {
     const headers = new HttpHeaders()
       .append('Content-Type', 'application/json')
       .append('Access-Control-Allow-Headers', 'Content-Type')
-      .append('Access-Control-Allow-Methods', 'GET')
+      .append('Access-Control-Allow-Methods', 'POST')
       .append('Access-Control-Allow-Origin', '*');
 
     this.httpClient.post(`${environment.apiURL}/ED-UpdateStatusNews`, formData, { headers: headers }).subscribe((res) => {
