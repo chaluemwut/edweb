@@ -24,13 +24,17 @@ export class HomeComponent implements OnInit {
   constructor(private httpClient: HttpClient, private modalService: NgbModal) { }
 
   ngOnInit(): void {
-    const headers = new HttpHeaders()
-      .append('Content-Type', 'application/json')
-      .append('Access-Control-Allow-Headers', 'Content-Type')
-      .append('Access-Control-Allow-Methods', 'GET')
-      .append('Access-Control-Allow-Origin', '*');
+    // const headers = new HttpHeaders()
+    //   .append('Content-Type', 'application/json')
+    //   .append('Access-Control-Allow-Headers', 'Content-Type')
+    //   .append('Access-Control-Allow-Methods', 'GET')
+    //   .append('Access-Control-Allow-Origin', '*');
 
-    this.httpClient.get(`${environment.apiURL}/ED-GetNews?EmployeeId=3`, { headers: headers })
+    this.httpClient.get('https://iotboot.com/chivacare/test-xx').subscribe((res: any) => {
+      console.log(res)
+    })
+
+    this.httpClient.get(`${environment.apiURL}/ED-GetNews?EmployeeId=3`)
       .subscribe((res: any) => {
         this.dataList = res.data
         console.log(this.dataList)
@@ -70,13 +74,13 @@ export class HomeComponent implements OnInit {
     formData.append("NewsId", '1')
     formData.append("Status", `${dataStatus}`)
 
-    const headers = new HttpHeaders()
-      .append('Content-Type', 'application/json')
-      .append('Access-Control-Allow-Headers', 'Content-Type')
-      .append('Access-Control-Allow-Methods', 'POST')
-      .append('Access-Control-Allow-Origin', '*');
+    // const headers = new HttpHeaders()
+    //   .append('Content-Type', 'application/json')
+    //   .append('Access-Control-Allow-Headers', 'Content-Type')
+    //   .append('Access-Control-Allow-Methods', 'POST')
+    //   .append('Access-Control-Allow-Origin', '*');
 
-    this.httpClient.post(`${environment.apiURL}/ED-UpdateStatusNews`, formData, { headers: headers }).subscribe((res) => {
+    this.httpClient.post(`${environment.apiURL}/ED-UpdateStatusNews`, formData).subscribe((res) => {
       this.modalService.dismissAll()
     })
   }
