@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  apiURL:'http://dev-sw6-uapi.ecm.in.th/uapi/drt-ElectronicsDocument'
+  apiURL:'https://dev-sw6-uapi.ecm.in.th/uapi/drt-ElectronicsDocument'
 };
 
 /*
